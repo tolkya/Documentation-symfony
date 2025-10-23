@@ -38,7 +38,7 @@ docker compose ps
 
 - URL :
 ```bash
-`https://localhost`
+https://localhost
 ```
 - ⚠️ Accepter le certificat SSL auto-signé dans le navigateur
 </details>
@@ -316,7 +316,7 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON SEQUENCES TO u
 <details>
     <summary><h2>3.2 - Modification du compose.yaml</h2></summary>
 
-Ajouter cette ligne dans la section `volumes` du service `database` :
+Ajouter cette ligne dans la section `volumes` du service `database` pour que l'utilisateur soit créé au prochain build :
 ```yaml
 volumes:
   - database_data:/var/lib/postgresql/data:rw
@@ -326,13 +326,13 @@ volumes:
 <details>
     <summary><h2>3.3 - Modification de la configuration d'utilisateur</h2></summary>
 <details>
-    <summary><h2>3.3.1 - Modification du .yaml</h2></summary>
+    <summary><h2>3.3.1 - Modification du compose.yaml</h2></summary>
 
-Supprimer cette ligne dans la section `volumes` du service `php` :
+Supprimer cette ligne dans la section `environment` du service `php` :
 ```yaml
 DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-app}
 ```
-Ajouter et modifier dans le service `database` :
+Modifier dans le service `database` :
 ```bash
     environment:
       POSTGRES_DB: ${POSTGRES_DB} # <- modifier cette ligne
@@ -348,35 +348,33 @@ Ajouter et modifier dans le service `database` :
 
 Modifier le fichier ".env" 
 ```bash
-###> doctrine/doctrine-bundle ###
-# Format described at https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
-# IMPORTANT: You MUST configure your server version, either here or in config/packages/doctrine.yaml
-
-DATABASE_URL="postgresql://user_symfony:secretdatabase:5432/app?serverVersion=16&charset=utf8"         # <- modifier cette ligne
-###< doctrine/doctrine-bundle ###
-
-###> Docker PostgreSQL Configuration ###    # <- ajouter cette ligne
-POSTGRES_USER="user_symfony"                # <- ajouter cette ligne
-POSTGRES_PASSWORD="secret"                  # <- ajouter cette ligne
-POSTGRES_DB="app"                           # <- ajouter cette ligne
-###< Docker PostgreSQL Configuration ###    # <- ajouter cette ligne
+DATABASE_URL="postgresql://user_symfony:secret@database:5432/app?serverVersion=16&charset=utf8"
+```
+Puis ajouter
+```bash
+###> Docker PostgreSQL Configuration ###
+POSTGRES_USER="user_symfony"
+POSTGRES_PASSWORD="secret"
+POSTGRES_DB="app"
+###< Docker PostgreSQL Configuration ###
 ```
 
 </details>
 <details>
     <summary><h2>3.3.3 - Configuration du fichiers d'environnement non versionné</h2></summary>
 
-Créer le fichier ".env.local", avec les vrais mots de passe
+CREER LE FICHIER  ".env.local", avec les vrais mots de passe
 ```bash
 ###> Database Configuration ###
-DATABASE_URL="postgresql://postgres:adminsecret@database:5432/app?serverVersion=16&charset=utf8"
+DATABASE_URL="postgresql://user_symfony:secret@database:5432/app?serverVersion=16&charset=utf8"
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=adminsecret
 POSTGRES_DB=app
 ###< Database Configuration ###
 ```
 
-Et COUPER / COLLER ce block du .env vers le env.local (pourra servir si changement Postgres --> MySQL)
+Et COUPER / COLLER 
+ce block du .env vers le env.local (pourra servir si changement Postgres --> MySQL)
 ```bash
 ###> doctrine/doctrine-bundle ###
 # Format described at https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
@@ -385,7 +383,6 @@ Et COUPER / COLLER ce block du .env vers le env.local (pourra servir si changeme
 # DATABASE_URL="sqlite:///%kernel.project_dir%/var/data_%kernel.environment%.db"
 # DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=8.0.32&charset=utf8mb4"
 # DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
-
 ###< doctrine/doctrine-bundle ###
 ```
 </details>
@@ -400,9 +397,13 @@ Rebuild avec la nouvelle configuration
 ```bash
 docker compose build
 ```
-Relancer la nouvelle configuration
+Relancer la nouvelle configuration sans .env.local
 ```bash
 docker compose up -d
+```
+Pour que les valeurs du .env.local écrasent celles du .env 
+```bash
+docker compose --env-file .env.local up -d
 ```
 </details>
 </details>
