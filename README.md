@@ -34,9 +34,12 @@ docker compose ps
 ```
 </details>
 <details>
-    <summary><h2>1.3 - Accès à l'application (PostgreSQL + Doctrine)</h2></summary>
+    <summary><h2>1.3 - Accès à l'application</h2></summary>
 
-- URL : `https://localhost`
+- URL :
+```bash
+`https://localhost`
+```
 - ⚠️ Accepter le certificat SSL auto-signé dans le navigateur
 </details>
 <details>
