@@ -241,6 +241,10 @@ Entrer dans le conteneur PostgreSQL
 ```bash
 psql -U app -d app
 ```
+si utilisateur => user_symfony
+```bash
+psql -U user_symfony -d app
+```
 Vérifier les utilisateurs
 ```bash
 \du
@@ -341,22 +345,17 @@ Ajouter et modifier dans le service `database` :
 
 Modifier le fichier ".env" 
 ```bash
-###> symfony/framework-bundle ###
-APP_ENV=dev
-APP_SECRET=""                                # <- modifier cette ligne
-###< symfony/framework-bundle ###
-
 ###> doctrine/doctrine-bundle ###
 # Format described at https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
 # IMPORTANT: You MUST configure your server version, either here or in config/packages/doctrine.yaml
 
-DATABASE_URL=""                             # <- modifier cette ligne
+DATABASE_URL="postgresql://user_symfony:secretdatabase:5432/app?serverVersion=16&charset=utf8"         # <- modifier cette ligne
 ###< doctrine/doctrine-bundle ###
 
 ###> Docker PostgreSQL Configuration ###    # <- ajouter cette ligne
-POSTGRES_USER=""                            # <- ajouter cette ligne
-POSTGRES_PASSWORD=""                        # <- ajouter cette ligne
-POSTGRES_DB=""                              # <- ajouter cette ligne
+POSTGRES_USER="user_symfony"                # <- ajouter cette ligne
+POSTGRES_PASSWORD="secret"                  # <- ajouter cette ligne
+POSTGRES_DB="app"                           # <- ajouter cette ligne
 ###< Docker PostgreSQL Configuration ###    # <- ajouter cette ligne
 ```
 
@@ -366,14 +365,10 @@ POSTGRES_DB=""                              # <- ajouter cette ligne
 
 Créer le fichier ".env.local", avec les vrais mots de passe
 ```bash
-###> symfony/framework-bundle ###
-APP_SECRET=cfd43436eff37492047bc654e4a13d0c
-###< symfony/framework-bundle ###
-
 ###> Database Configuration ###
-DATABASE_URL="postgresql://user_symfony:secret@database:5432/app?serverVersion=16&charset=utf8"
+DATABASE_URL="postgresql://postgres:adminsecret@database:5432/app?serverVersion=16&charset=utf8"
 POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres_admin_secret_123
+POSTGRES_PASSWORD=adminsecret
 POSTGRES_DB=app
 ###< Database Configuration ###
 ```
