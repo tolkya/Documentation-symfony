@@ -23,10 +23,6 @@ Construire les images Docker (premier build)
 ```bash
 docker compose build --pull --no-cache
 ``` 
-Alternative pour builds suivants (plus rapide)
-```bash
-docker compose build
-```
 
 Démarrer les conteneurs
 ```bash
@@ -86,8 +82,10 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g @dbml/cli
 ``` 
+</details>
+<details>
+    <summary><h2>Résultat final du dockerfile</summary></h2>
 
-Résultat final du dockerfile 
 ```bash
 # Base FrankenPHP image
 FROM frankenphp_upstream AS frankenphp_base
@@ -133,7 +131,7 @@ db2dbml postgres 'postgresql://user:password@localhost:5432/dbname?schemas=schem
 ``` 
 ```bash
 db2dbml postgres 'postgresql://user_symfony:secret@database:5432/app' -o database1.dbml
-``` 
+```
 </details>
 <details>
     <summary><h2>Ajout d'Adminer - Interface graphique pour PostgreSQL</h2></summary>
