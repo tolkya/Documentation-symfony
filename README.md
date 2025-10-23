@@ -433,7 +433,7 @@ sf list make
     - Et bien d'autres commandes de génération !
 </details>
 <details>
-    <summary><h2>4.2 - Installation du WebApp Pack (stack complète)</h2></summary>
+    <summary><h2>4.2 - Installation du WebApp Pack </h2></summary>
 
 - Dans le conteneur PHP
 ```bash
