@@ -30,7 +30,7 @@ docker compose up -d
 ```
 Vérifier l'état des conteneurs
 ```bash
-docker compose ps
+<docker compose ps
 ```
 </details>
 <details>
@@ -58,7 +58,7 @@ composer require symfony/orm-pack
 </details>
 </details>
 <details>
-    <summary><h2>✅Modification utile Dockerfile✅ (gaing de temps + optimisation)</h2></summary>
+    <summary><h2>✅Modification Dockerfile✅</h2></summary>
 <details>
     <summary><h2>Alias sf = php bin/console</h2></summary>
 
@@ -137,6 +137,15 @@ db2dbml postgres 'postgresql://user_symfony:secret@database:5432/app' -o databas
 ```
 </details>
 <details>
+    <summary><h2>Réduire la latence de chargement</h2></summary>
+
+- Dans de le fichier `docker-compose.override.yml` DÉCOMMENTER
+```bash
+      - /app/vendor
+``` 
+</details>
+</details>
+<details>
     <summary><h2>Ajout d'Adminer - Interface graphique pour PostgreSQL</h2></summary>
 
 - Qu'est-ce qu'Adminer ?
@@ -174,7 +183,6 @@ Dans l'interface Adminer, utiliser ces paramètres :
     - 🔍 **Exécution de requêtes SQL** - Interface de requêtage
     - 📈 **Schéma de base** - Vue d'ensemble des relations
     - 📤 **Import/Export** - Sauvegarde et restauration
-</details>
 </details>
 <details>
     <summary><h2> ‼️⚠️‼️REBUILD après modification des fichiers Docker‼️⚠️‼️</h2></summary>
@@ -418,6 +426,9 @@ docker compose --env-file .env.local up -d
 ```bash
 composer require --dev symfony/maker-bundle
 ```
+
+‼️⚠️‼️Reconstruction après installation‼️⚠️‼️
+
 - Vérifier l'installation
 ```bash
 sf list make
@@ -443,6 +454,9 @@ composer require symfony/webapp-pack
 ```bash
 exit
 ```
+
+‼️⚠️‼️Reconstruction après installation‼️⚠️‼️
+
 - 🚀 Ce que le WebApp Pack apporte :
     - **Twig** - Moteur de templates pour les vues
     - **Doctrine Migrations** - Gestion des migrations de BDD
@@ -457,7 +471,42 @@ exit
 
 </details>
 <details>
-    <summary><h2>4.3 - ‼️⚠️‼️Reconstruction après installation‼️⚠️‼️</h2></summary>
+    <summary><h2>4.4 - Installation easyadmin (Interface Admin) </h2></summary>
+
+- Dans le conteneur PHP
+```bash
+composer require easycorp/easyadmin-bundle
+```
+‼️⚠️‼️Reconstruction après installation‼️⚠️‼️
+
+- Pour faire l'interface -> /admin URL
+```bash
+sf make:admin:dashboard
+```
+- Clear le cache
+```bash
+sf c:c
+```
+
+- src -> Controller -> Admin -> DashboardController.php
+    - La route 
+```bash
+[AdminDashboard(routePath: '/admin', routeName: 'admin')]
+```
+    - DÉCOMMENTER
+```bash
+$adminUrlGenerator = $this->container->get(AdminUrlGenerator::class):
+return $this->redirect($adminUrlGenerator->setController(UserCrudController::class)->generateUrl());
+```
+    - Rajouter IMPORT 
+```bash
+use App\Controller\Admin\UserCrudController;
+```
+
+
+</details>
+<details>
+    <summary><h2>4.5 - ‼️⚠️‼️Reconstruction après installation‼️⚠️‼️</h2></summary>
 
 Ces installations peuvent modifier les fichiers Docker et ajouter de nouveaux services
 ```bash
