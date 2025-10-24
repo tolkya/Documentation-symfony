@@ -136,6 +136,7 @@ db2dbml postgres 'postgresql://user:password@localhost:5432/dbname?schemas=schem
 db2dbml postgres 'postgresql://user_symfony:secret@database:5432/app' -o database1.dbml
 ```
 </details>
+</details>
 <details>
     <summary><h2>Réduire la latence de chargement</h2></summary>
 
@@ -143,7 +144,6 @@ db2dbml postgres 'postgresql://user_symfony:secret@database:5432/app' -o databas
 ```bash
       - /app/vendor
 ``` 
-</details>
 </details>
 <details>
     <summary><h2>Ajout d'Adminer - Interface graphique pour PostgreSQL</h2></summary>
@@ -371,7 +371,7 @@ POSTGRES_DB="app"
 <details>
     <summary><h2>3.3.3 - Configuration du fichiers d'environnement non versionné</h2></summary>
 
-CREER LE FICHIER  ".env.local", avec les vrais mots de passe
+CRÉER LE FICHIER  ".env.local", avec les vrais mots de passe
 ```bash
 ###> Database Configuration ###
 DATABASE_URL="postgresql://user_symfony:secret@database:5432/app?serverVersion=16&charset=utf8"
@@ -471,7 +471,7 @@ exit
 
 </details>
 <details>
-    <summary><h2>4.4 - Installation easyadmin (Interface Admin) </h2></summary>
+    <summary><h2>4.3 - Installation easyadmin (Interface Admin) </h2></summary>
 
 - Dans le conteneur PHP
 ```bash
@@ -502,7 +502,20 @@ return $this->redirect($adminUrlGenerator->setController(UserCrudController::cla
 ```bash
 use App\Controller\Admin\UserCrudController;
 ```
+</details>
+<details>
+    <summary><h2>4.4 - Installation API Platform </h2></summary>
 
+- Dans le conteneur PHP
+```bash
+composer req api
+```
+- Sortir du conteneur
+```bash
+exit
+```
+
+‼️⚠️‼️Reconstruction après installation‼️⚠️‼️
 
 </details>
 <details>
