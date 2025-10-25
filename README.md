@@ -533,7 +533,7 @@ docker compose up -d
 </details>
 
 <details>
-    <summary><h2>5. Fonctionnalités et mises en applications</h2></summary>
+    <summary><h1>.👨‍💻5. Fonctionnalités et mises en applications</h1></summary>
 
  - Dans le conteneur PHP
 Voir toutes les commandes Symfony disponibles
