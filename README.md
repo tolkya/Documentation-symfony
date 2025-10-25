@@ -170,13 +170,8 @@ services:
     - Interface : Web accessible depuis votre navigateur
 
 - Connexion à PostgreSQL via Adminer
+
 ![alt text](image.png)
-Dans l'interface Adminer, utiliser ces paramètres :
-    - **Système** : PostgreSQL
-    - **Serveur** : database
-    - **Utilisateur** : user_symfony
-    - **Mot de passe** : secret
-    - **Base de données** : app
 
 -  Fonctionnalités disponibles
     - 📊 **Visualisation des tables** - Structure et données
