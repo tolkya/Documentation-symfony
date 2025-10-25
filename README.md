@@ -530,8 +530,10 @@ Relancer la nouvelle configuration
 docker compose up -d
 ```
 </details>
+</details>
+
 <details>
-    <summary><h2>4.4 - Test des nouvelles fonctionnalités</h2></summary>
+    <summary><h2>5. Fonctionnalités et mises en applications</h2></summary>
 
  - Dans le conteneur PHP
 Voir toutes les commandes Symfony disponibles
@@ -562,11 +564,22 @@ Générer un CRUD complet pour une entité
 ```bash
 sf make:crud Product
 ```
-</details>
+Générer un Utilisateur
+```bash
+sf make:user
+```
+Générer un formulaire de log
+```bash
+sf make:auth
+```
+Générer un formulaire d'inscription
+```bash
+sf make:registration-form
+```
+
 </details>
 
 
-</details>
 
 
 
