@@ -554,7 +554,7 @@ sf make:migration
 ```
 Appliquer les migrations à la base de données
 ```bash
-sf make:migrations:migrate
+sf doctrine:migrations:migrate
 ```
 Générer un contrôleur
 ```bash
