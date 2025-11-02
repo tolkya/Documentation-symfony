@@ -135,6 +135,10 @@ db2dbml postgres 'postgresql://user:password@localhost:5432/dbname?schemas=schem
 ```bash
 db2dbml postgres 'postgresql://user_symfony:secret@database:5432/app' -o database1.dbml
 ```
+- COPIER / COLLER le contenue du fichier dbml créer sur le site 
+```bash
+https://dbdiagram.io/home
+```
 </details>
 </details>
 <details>
