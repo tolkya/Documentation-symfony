@@ -583,9 +583,60 @@ sf make:registration-form
 
 </details>
 
+## installation JWT
 
+dans conteneur php 
+composer require lexik/jwt-authentication-bundle
+REBUILD
+sf lexik:jwt:generate-keypair
 
+rajouter dans le 
+config/packages/lexik_jwt_authentication.yaml
+lexik_jwt_authentication:
+    secret_key: '%env(resolve:JWT_SECRET_KEY)%' # required for token creation
+    public_key: '%env(resolve:JWT_PUBLIC_KEY)%' # required for token verification
+    pass_phrase: '%env(JWT_PASSPHRASE)%' # required for token creation
+    token_ttl: 3600 # in seconds, default is 3600  
 
+Dans le config/packages/security.yaml
 
+RAJOUTER
+PLACER LE LOGIN AVANT API ET MAIN DOIT ÊTRE APRÈS API   
+firewalls:
+    login:
+                pattern: ^/api/login
+                stateless: true
+                json_login:
+                    check_path: /api/login_check
+                    success_handler: lexik_jwt_authentication.handler.authentication_success
+                    failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
+RAJOUTER jwt: ~
+        api:
+            pattern:   ^/api
+            stateless: true
+            jwt: ~
 
+MODIFIER l'access_control
+    access_control:
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+
+RAJOUTER dans 
+config/routes.yaml
+api_login_check:
+    path: /api/login_check
+
+Rajouter dans 
+config/packages/lexik_jwt_authentication.yaml
+lexik_jwt_authentication:
+    api_platform:
+        check_path: /api/login_check
+        username_path: email
+        password_path: security.credentials.password
+
+commande mettre dans le shell php:
+curl -X POST -H "Content-Type: application/json" https://localhost/api/login_check -d '{"email":"jeremy@email.fr","password":"Jeremy974#"}' -k
+
+postman
+https://localhost/api/mon-garage
