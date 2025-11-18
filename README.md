@@ -640,3 +640,61 @@ curl -X POST -H "Content-Type: application/json" https://localhost/api/login_che
 
 postman
 https://localhost/api/mon-garage
+
+## installation ngrock
+
+s'inscrire sur ngrok
+
+
+Install ngrok via Homebrew with the following command:
+```bash
+brew install ngrok
+```
+recupérer le token sur ngrok
+Run the following command to add your authtoken to the default ngrok.yml
+```bash
+ngrok config add-authtoken your authtoken
+```
+Modification compose.yaml
+```bash
+  php:
+    image: ${IMAGES_PREFIX:-}app-php
+    restart: unless-stopped
+    environment:
+      SERVER_NAME: :80
+```
+Commenter les ports
+```bash
+    ports:
+      # HTTP
+      - target: 80
+        published: ${HTTP_PORT:-80}
+        protocol: tcp
+      # # HTTPS
+      # - target: 443
+      #   published: ${HTTPS_PORT:-443}
+      #   protocol: tcp
+      # # HTTP/3
+      # - target: 443
+      #   published: ${HTTP3_PORT:-443}
+      #   protocol: udp
+```
+
+Modification Caddyfile
+```bash
+{
+	skip_install_trust
+	# Disable automatic HTTPS
+	auto_https off
+```
+```bash
+http://{$SERVER_NAME:localhost} {
+	# Force HTTP only - disable automatic HTTPS
+```
+‼️⚠️‼️Reconstruction‼️⚠️‼️
+
+
+Deploy your app online
+```bash
+ngrok http 80
+```
