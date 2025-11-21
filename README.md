@@ -637,6 +637,7 @@ lexik_jwt_authentication:
 
 commande mettre dans le shell php:
 curl -X POST -H "Content-Type: application/json" https://localhost/api/login_check -d '{"email":"jeremy@email.fr","password":"Jeremy974#"}' -k
+curl -X POST -H "Content-Type: application/json" http://localhost/api/login_check -d '{"email":"jeremy@email.fr","password":"Jeremy974#"}' -k
 
 postman
 https://localhost/api/mon-garage
